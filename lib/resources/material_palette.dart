@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class MaterialPalette {
   Color primaryColor;
+  Color accentColor;
   Color? darkPrimaryColor;
   Color? lightPrimaryColor;
   Color? secondaryColor;
-  Color? accentColor;
   Color? textColor;
   Color? secondaryTextColor;
   Color? iconColor;

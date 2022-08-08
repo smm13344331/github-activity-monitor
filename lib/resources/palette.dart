@@ -17,7 +17,7 @@ class Palette {
 
     lightPalette = MaterialPalette(
       primaryColor: Colors.white,
-      accentColor: accent,
+      accentColor: accent!,
       secondaryColor: const Color(0xFFeff1f2),
       textColor: Colors.black,
       iconColor: Colors.black,
@@ -26,7 +26,7 @@ class Palette {
     );
     darkPalette = MaterialPalette(
       primaryColor: const Color(0xFF000000),
-      accentColor: accent,
+      accentColor: accent!,
       secondaryColor: const Color(0xFF1d1d1d),
       textColor: const Color(0xFFffffff),
       iconColor: const Color(0xFFffffff),
