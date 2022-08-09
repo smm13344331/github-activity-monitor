@@ -2,9 +2,11 @@ class Network {
 
   static final Network _network = Network._internal();
 
-  late final String githubBaseUrl;
   late final String cacheMaxAge;
   late final String cacheMaxStale;
+
+  /// Github Services
+  late final String githubBaseUrl;
 
   factory Network() {
     return _network;

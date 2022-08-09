@@ -3,6 +3,7 @@ import 'package:github_activity_monitor/resources/network.dart';
 import 'package:github_activity_monitor/resources/resources.dart';
 import 'package:logger/logger.dart';
 
+/// Regularly used variables and functions
 class Application {
   static final Application _application = Application._internal();
 
