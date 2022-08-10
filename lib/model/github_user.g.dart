@@ -9,7 +9,7 @@ part of 'github_user.dart';
 GithubUser _$GithubUserFromJson(Map<String, dynamic> json) => GithubUser(
       login: json['login'] as String,
       id: json['id'] as int,
-      avatarUrl: json['avatarUrl'] as String?,
+      avatarUrl: json['avatar_url'] as String?,
       repositories: (json['repositories'] as List<dynamic>?)
           ?.map((e) => GithubRepository.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -27,7 +27,7 @@ Map<String, dynamic> _$GithubUserToJson(GithubUser instance) {
     }
   }
 
-  writeNotNull('avatarUrl', instance.avatarUrl);
+  writeNotNull('avatar_url', instance.avatarUrl);
   writeNotNull(
       'repositories', instance.repositories?.map((e) => e.toJson()).toList());
   return val;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:github_activity_monitor/configs/routes/route_navigator.dart';
+import 'package:github_activity_monitor/configs/routes/route_manager.dart';
 import 'package:github_activity_monitor/service/github_service.dart';
 
 class RestProvider {
@@ -35,7 +35,7 @@ class RestProvider {
 
   static Future<void> logout(BuildContext context) async {
     jwt = '';
-    RouteNavigator.navigateToRoute(
+    RouteManager.navigateTo(
       context: context,
       route: Routes.home,
       clearStack: true,
@@ -43,5 +43,4 @@ class RestProvider {
   }
 
   static GithubService get githubService => GithubService();
-
 }

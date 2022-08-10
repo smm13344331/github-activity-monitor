@@ -1,6 +1,6 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
-import 'package:github_activity_monitor/configs/routes/route_navigator.dart';
+import 'package:github_activity_monitor/configs/routes/route_manager.dart';
 import 'package:github_activity_monitor/rest_provider.dart';
 import 'package:github_activity_monitor/screens/not_found_screen.dart';
 import 'package:github_activity_monitor/util/application.dart';
@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
 
     final router = FluroRouter();
     Routes.configureRoutes(router);
-    RouteNavigator.router = router;
+    RouteManager.router = router;
   }
 
   @override
@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Github Activity Monitor',
       // Tells the system which are the supported languages
-      onGenerateRoute: RouteNavigator.router.generator,
+      onGenerateRoute: RouteManager.router.generator,
       onUnknownRoute: (settings) =>
           MaterialPageRoute(builder: (_) => const NotFoundScreen()),
     );

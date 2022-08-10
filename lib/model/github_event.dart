@@ -9,11 +9,17 @@ part 'github_event.g.dart';
 class GithubEvent {
   late final String id;
   late final String type;
-  late final GithubUser actor;
+  late final GithubUser? actor;
   late final GithubRepository repo;
-  late final DateTime createdAt;
+  @JsonKey(name: "created_at")
+  late final DateTime? createdAt;
 
-  GithubEvent(this.id, this.type, this.actor, this.repo, this.createdAt);
+  GithubEvent(
+      {required this.id,
+      required this.type,
+      required this.actor,
+      required this.repo,
+      this.createdAt});
 
   factory GithubEvent.fromJson(Map<String, dynamic> json) =>
       _$GithubEventFromJson(json);
@@ -22,6 +28,6 @@ class GithubEvent {
 
   @override
   String toString() {
-    return 'GithubEvent{id: $id, type: $type, actor: $actor, repo: $repo, createdAt: $createdAt}';
+    return 'GithubEvent{id: $id, type: $type, actor: ${actor.toString()}, repo: ${repo.toString()}, createdAt: $createdAt}';
   }
 }

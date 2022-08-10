@@ -31,7 +31,6 @@ class Application {
   final num appBarSmallHeight = 60.0;
   final double blurValue = 25;
   final int pageSize = 15;
-  final ApiType apiType = ApiType.rest;
 
   final String _enFont = 'Comfortaa';
 
@@ -41,4 +40,4 @@ class Application {
 
 Application get application => Application();
 
-enum ApiType { rest, graphQL }
+enum ApiType { rest, graphQL, dummy }

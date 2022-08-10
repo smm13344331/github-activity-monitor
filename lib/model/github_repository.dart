@@ -15,4 +15,11 @@ class GithubRepository {
       _$GithubRepositoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$GithubRepositoryToJson(this);
+
+  @override
+  String toString() {
+    return 'GithubRepository{id: $id, name: $name, url: $url}';
+  }
+
+
 }

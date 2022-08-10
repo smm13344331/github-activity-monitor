@@ -8,6 +8,7 @@ part 'github_user.g.dart';
 class GithubUser {
   late final String login;
   late final int id;
+  @JsonKey(name: "avatar_url")
   late final String? avatarUrl;
   late final List<GithubRepository>? repositories;
 
@@ -21,4 +22,9 @@ class GithubUser {
       _$GithubUserFromJson(json);
 
   Map<String, dynamic> toJson() => _$GithubUserToJson(this);
+
+  @override
+  String toString() {
+    return 'GithubUser{login: $login, id: $id, avatarUrl: $avatarUrl}';
+  }
 }
