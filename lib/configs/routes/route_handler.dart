@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:github_activity_monitor/screens/home_screen.dart';
 import 'package:github_activity_monitor/screens/not_found_screen.dart';
+import 'package:github_activity_monitor/screens/report_screen.dart';
 import 'package:github_activity_monitor/util/application.dart';
 
 var notFoundHandler =
@@ -13,4 +14,9 @@ var notFoundHandler =
 var homeScreenHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return const HomeScreen();
+});
+
+var reportScreenHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  return const ReportScreen();
 });

@@ -10,7 +10,7 @@ class Application {
   factory Application() => _application;
 
   Application._internal() {
-    colorPalette = Resources.palette.lightPalette!;
+    colorPalette = Resources.palette;
     network = Resources.network;
   }
 

@@ -1,8 +1,17 @@
-
+import 'package:flutter/material.dart';
+import 'package:github_activity_monitor/resources/material_palette.dart';
 import 'package:github_activity_monitor/resources/network.dart';
-import 'package:github_activity_monitor/resources/palette.dart';
 
 class Resources {
   static Network get network => Network();
-  static Palette get palette => Palette();
+
+  static MaterialPalette get palette => MaterialPalette(
+        primaryColor: Colors.white,
+        accentColor: const Color(0xFFff662b),
+        secondaryColor: const Color(0xFFeff1f2),
+        textColor: Colors.black,
+        iconColor: Colors.black,
+        secondaryTextColor: const Color(0xFF5d6167),
+        cardColor: Colors.white,
+      );
 }

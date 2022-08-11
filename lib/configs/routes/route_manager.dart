@@ -4,10 +4,12 @@ import 'package:github_activity_monitor/configs/routes/route_handler.dart';
 
 class Routes {
   static String home = '/';
+  static String report = '/report';
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = notFoundHandler;
     router.define(home, handler: homeScreenHandler);
+    router.define(report, handler: reportScreenHandler);
   }
 }
 
