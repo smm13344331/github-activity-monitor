@@ -20,6 +20,4 @@ class GithubRepository {
   String toString() {
     return 'GithubRepository{id: $id, name: $name, url: $url}';
   }
-
-
 }

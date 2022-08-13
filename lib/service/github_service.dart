@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:github_activity_monitor/model/bucket.dart';
 import 'package:github_activity_monitor/model/bucket_list.dart';
 import 'package:github_activity_monitor/model/github_event.dart';

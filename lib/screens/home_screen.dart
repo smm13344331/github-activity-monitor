@@ -20,12 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final TextEditingController _userLoginController = TextEditingController();
 
-//  final _userReportFormKey = GlobalKey<FormState>();
-//  final _scaffoldKey = GlobalKey<ScaffoldState>();
-//  final List<String> _userList = [];
   late final FocusNode _loginFocusNode;
-
-  String? _string;
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildHomeDesktopView(Size screenSize, BuildContext context) {
-    final ButtonStyle style = ElevatedButton.styleFrom(
-      primary: application.colorPalette.accentColor,
-      textStyle: Theme.of(context).textTheme.subtitle1!.copyWith(
-          color: application.colorPalette.textColor,
-          fontFamily: application.fontFamily,
-          fontSize: 30),
-    );
     return Scaffold(
       body: SizedBox(
         width: screenSize.width,

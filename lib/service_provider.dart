@@ -6,10 +6,10 @@ class ServiceProvider {
   static bool isInternetAvailable = false;
   static String accessToken = '';
 
-  /// This method checks the JWToken exists or not.
+  /// Returns true if the JWT is set.
   static bool isJWTokenExist() => accessToken.isNotEmpty;
 
-  /// This method generates a required header for an HTTP request.
+  /// This method generates a required headers for a HTTP request.
   static Map<String, String> generateHeaders({
     bool authenticated = false,
     bool jsonContentType = false,

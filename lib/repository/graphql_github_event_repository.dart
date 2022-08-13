@@ -1,5 +1,6 @@
 import 'package:github_activity_monitor/model/github_event.dart';
 import 'package:github_activity_monitor/repository/github_event_repository.dart';
+
 //import 'package:github_activity_monitor/service_provider.dart';
 //import 'package:graphql_flutter/graphql_flutter.dart';
 

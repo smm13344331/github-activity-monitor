@@ -7,6 +7,7 @@ class GithubUsersNotifier extends ChangeNotifier {
   final List<String> _urls = [];
 
   UnmodifiableListView<String> get users => UnmodifiableListView(_users);
+
   UnmodifiableListView<String> get urls => UnmodifiableListView(_urls);
 
   void add(String user, {url = ''}) {

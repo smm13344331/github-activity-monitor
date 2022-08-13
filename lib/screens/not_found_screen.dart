@@ -10,8 +10,6 @@ class NotFoundScreen extends StatefulWidget {
 }
 
 class _NotFoundScreenState extends State<NotFoundScreen> {
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(

@@ -45,6 +45,7 @@ class Application {
   final String _enFont = 'Comfortaa';
 
   String get fontFamily => _enFont;
+
   Logger get logger => _logger;
 }
 
