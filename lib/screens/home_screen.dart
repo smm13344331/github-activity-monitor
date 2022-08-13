@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     filled: true,
                     fillColor: application.colorPalette.secondaryColor,
                     suffixIcon: _userLoginController.text.isNotEmpty &&
-                            _userLoginController.text.length > 4
+                            _userLoginController.text.length > 1
                         ? Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
