@@ -15,6 +15,7 @@ class BucketList {
 }
 
 enum SummaryType {
+  dayOfMonth,
   hourOfDay,
   dayOfWeek,
   repository,

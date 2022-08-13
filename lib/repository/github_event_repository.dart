@@ -3,7 +3,6 @@ import 'package:github_activity_monitor/model/github_event.dart';
 import 'package:github_activity_monitor/repository/dummy_github_event_repository.dart';
 import 'package:github_activity_monitor/repository/graphql_github_event_repository.dart';
 import 'package:github_activity_monitor/repository/rest_github_event_repository.dart';
-import 'package:github_activity_monitor/util/application.dart';
 
 abstract class GithubEventRepository {
   Future<List<GithubEvent>> getEventsForUser(String login);

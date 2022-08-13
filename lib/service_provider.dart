@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:github_activity_monitor/configs/routes/route_manager.dart';
 import 'package:github_activity_monitor/service/github_service.dart';
 
-class RestProvider {
+class ServiceProvider {
   static bool isInternetAvailable = false;
-  static String jwt = '';
+  static String accessToken = '';
 
   /// This method checks the JWToken exists or not.
-  static bool isJWTokenExist() => jwt.isNotEmpty;
+  static bool isJWTokenExist() => accessToken.isNotEmpty;
 
   /// This method generates a required header for an HTTP request.
   static Map<String, String> generateHeaders({
@@ -18,7 +18,7 @@ class RestProvider {
 
     if (authenticated) {
       if (isJWTokenExist()) {
-        headers.putIfAbsent('Authorization', () => 'Bearer $jwt');
+        headers.putIfAbsent('Authorization', () => 'token $accessToken');
       }
     }
 
@@ -28,13 +28,13 @@ class RestProvider {
       'Content-Type',
       () => jsonContentType ? jsonEncoded : multipartFromData,
     );
-    headers.putIfAbsent('Accept', () => 'application/json');
+    headers.putIfAbsent('Accept', () => 'application/vnd.github+json');
     headers.putIfAbsent('Access-Control-Allow-Origin', () => '*');
     return headers;
   }
 
   static Future<void> logout(BuildContext context) async {
-    jwt = '';
+    accessToken = '';
     RouteManager.navigateTo(
       context: context,
       route: Routes.home,

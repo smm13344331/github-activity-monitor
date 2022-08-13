@@ -1,30 +1,35 @@
 import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
-import 'package:github_activity_monitor/model/github_user.dart';
 
 class GithubUsersNotifier extends ChangeNotifier {
-  final Map<String, GithubUser> _users = {};
+  final List<String> _users = [];
+  final List<String> _urls = [];
 
-  UnmodifiableMapView<String, GithubUser> get users =>
-      UnmodifiableMapView(_users);
+  UnmodifiableListView<String> get users => UnmodifiableListView(_users);
+  UnmodifiableListView<String> get urls => UnmodifiableListView(_urls);
 
-  void add(GithubUser user) {
-    _users.update(
-      user.login,
-      (_) => user,
-      ifAbsent: () => user,
-    );
+  void add(String user, {url = ''}) {
+    _users.add(user);
+    _urls.add(url);
     notifyListeners();
   }
 
-  void remove(String username) {
-    _users.remove(username);
+  int length() => _users.length;
+
+  void removeAt(int index) {
+    _users.removeAt(index);
+    _urls.removeAt(index);
     notifyListeners();
   }
 
   void removeAll() {
     _users.clear();
+    _urls.clear();
     notifyListeners();
   }
+
+  bool isNotEmpty() => _users.isNotEmpty;
+
+  bool isEmpty() => _users.isEmpty;
 }

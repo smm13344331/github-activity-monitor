@@ -22,6 +22,16 @@ class Application {
     ),
   );
 
+  double getMax(Iterable<int> ints) {
+    int max = 0;
+    for (var element in ints) {
+      if (element > max) {
+        max = element;
+      }
+    }
+    return max.toDouble() + 5;
+  }
+
   late MaterialPalette colorPalette;
   late Network network;
 
@@ -39,5 +49,3 @@ class Application {
 }
 
 Application get application => Application();
-
-enum ApiType { rest, graphQL, dummy }

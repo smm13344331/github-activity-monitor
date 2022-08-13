@@ -1,9 +1,12 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
+import 'package:github_activity_monitor/configs/dependency_configuration.dart';
 import 'package:github_activity_monitor/configs/routes/route_manager.dart';
-import 'package:github_activity_monitor/rest_provider.dart';
+import 'package:github_activity_monitor/notifiers/github_users_notifier.dart';
+import 'package:github_activity_monitor/service_provider.dart';
 import 'package:github_activity_monitor/screens/not_found_screen.dart';
 import 'package:github_activity_monitor/util/application.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'configs/configure_nonweb.dart'
@@ -28,7 +31,20 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    RestProvider.jwt = "";
+    ServiceProvider.accessToken = const String.fromEnvironment("GITHUB_TOKEN");
+    switch (const String.fromEnvironment("API_TYPE")) {
+      case 'REST':
+        DependencyConfiguration.apiType = ApiType.rest;
+        break;
+      case 'GRAPH_QL':
+        DependencyConfiguration.apiType = ApiType.graphQL;
+        break;
+      case 'DUMMY':
+        DependencyConfiguration.apiType = ApiType.dummy;
+        break;
+      default:
+        DependencyConfiguration.apiType = ApiType.rest;
+    }
 
     final router = FluroRouter();
     Routes.configureRoutes(router);
@@ -37,26 +53,28 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      builder: (context, widget) => ResponsiveWrapper.builder(
-        ClampingScrollWrapper.builder(context, widget!),
-        defaultScale: true,
-        minWidth: 480,
-        defaultName: MOBILE,
-        breakpoints: [
-          const ResponsiveBreakpoint.autoScale(480, name: MOBILE),
-          const ResponsiveBreakpoint.resize(600, name: MOBILE),
-          const ResponsiveBreakpoint.resize(850, name: TABLET),
-          const ResponsiveBreakpoint.resize(1080, name: DESKTOP),
-        ],
-        background: Container(color: application.colorPalette.secondaryColor),
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => GithubUsersNotifier(),
+      child: MaterialApp(
+        builder: (context, widget) => ResponsiveWrapper.builder(
+          ClampingScrollWrapper.builder(context, widget!),
+          defaultScale: true,
+          minWidth: 480,
+          defaultName: DESKTOP,
+          breakpoints: [
+            const ResponsiveBreakpoint.autoScale(480, name: MOBILE),
+            const ResponsiveBreakpoint.resize(600, name: MOBILE),
+            const ResponsiveBreakpoint.resize(850, name: TABLET),
+            const ResponsiveBreakpoint.resize(1080, name: DESKTOP),
+          ],
+          background: Container(color: application.colorPalette.secondaryColor),
+        ),
+        debugShowCheckedModeBanner: false,
+        title: 'Github Activity Monitor',
+        onGenerateRoute: RouteManager.router.generator,
+        onUnknownRoute: (settings) =>
+            MaterialPageRoute(builder: (_) => const NotFoundScreen()),
       ),
-      debugShowCheckedModeBanner: false,
-      title: 'Github Activity Monitor',
-      // Tells the system which are the supported languages
-      onGenerateRoute: RouteManager.router.generator,
-      onUnknownRoute: (settings) =>
-          MaterialPageRoute(builder: (_) => const NotFoundScreen()),
     );
   }
 }

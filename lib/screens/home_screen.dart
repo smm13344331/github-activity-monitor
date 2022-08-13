@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:github_activity_monitor/configs/routes/route_manager.dart';
+import 'package:github_activity_monitor/notifiers/github_users_notifier.dart';
 import 'package:github_activity_monitor/util/application.dart';
 import 'package:github_activity_monitor/widgets/responsive.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,13 +16,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const int _maxUsers = 10;
+  static const int _maxUsers = 20;
 
   final TextEditingController _userLoginController = TextEditingController();
 
 //  final _userReportFormKey = GlobalKey<FormState>();
 //  final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final List<String> _userList = [];
+//  final List<String> _userList = [];
   late final FocusNode _loginFocusNode;
 
   String? _string;
@@ -127,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     errorMaxLines: 1,
                     errorText: _isMaxUsersExceeded()
-                        ? "You can add up to 10 users."
+                        ? "You can add up to $_maxUsers users."
                         : null,
                     hintText: "Write a login name",
                     hintStyle: TextStyle(
@@ -168,84 +169,95 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 200,
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: MasonryGridView.count(
-                      shrinkWrap: false,
+                    child: Consumer<GithubUsersNotifier>(
+                      builder: (context, value, child) => MasonryGridView.count(
+                        shrinkWrap: false,
 //                    scrollDirection: Axis.horizontal,
-                      itemCount: _userList.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(3.0),
-                          child: Chip(
-                            backgroundColor:
-                                application.colorPalette.accentColor,
-                            onDeleted: () {
-                              if (mounted) {
-                                setState(() {
-                                  _userList.removeAt(index);
-                                });
-                              }
-                            },
-                            label: Text(
-                              _userList[index],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1!
-                                  .copyWith(
-                                      color: application.colorPalette.textColor,
-                                      fontFamily: application.fontFamily,
-                                      fontSize: 12),
+                        itemCount: Provider.of<GithubUsersNotifier>(context,
+                                listen: false)
+                            .length(),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Chip(
+                              backgroundColor:
+                                  application.colorPalette.accentColor,
+                              onDeleted: () {
+                                value.removeAt(index);
+                              },
+                              label: Text(
+                                value.users[index],
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1!
+                                    .copyWith(
+                                        color:
+                                            application.colorPalette.textColor,
+                                        fontFamily: application.fontFamily,
+                                        fontSize: 12),
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      crossAxisCount: 5,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
+                          );
+                        },
+                        crossAxisCount: 5,
+                        mainAxisSpacing: 8,
+                        crossAxisSpacing: 8,
+                      ),
                     ),
                   )),
-              _userList.isNotEmpty
-                  ? ElevatedButton(
-                      onPressed: () {
-                        RouteManager.navigateTo(
-                            context: context, route: Routes.report);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: application.colorPalette.accentColor,
-                        textStyle: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(
-                                color: application.colorPalette.textColor,
-                                fontFamily: application.fontFamily,
-                                fontSize: 30),
-                      ),
-                      child: Text(
-                        "Submit",
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: application.colorPalette.textColor,
-                            fontFamily: application.fontFamily,
-                            fontSize: 18),
-                      ))
-                  : ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.grey,
-                        textStyle: Theme.of(context)
-                            .textTheme
-                            .subtitle1!
-                            .copyWith(
-                                color: application.colorPalette.textColor,
-                                fontFamily: application.fontFamily,
-                                fontSize: 30),
-                      ),
-                      child: Text(
-                        "Submit",
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: application.colorPalette.textColor,
-                            fontFamily: application.fontFamily,
-                            fontSize: 18),
-                      ),
-                    )
+              Consumer<GithubUsersNotifier>(
+                builder: (context, value, child) {
+                  return value.isNotEmpty()
+                      ? ElevatedButton(
+                          onPressed: () {
+                            RouteManager.navigateTo(
+                                context: context, route: Routes.report);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: application.colorPalette.accentColor,
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    color: application.colorPalette.textColor,
+                                    fontFamily: application.fontFamily,
+                                    fontSize: 30),
+                          ),
+                          child: Text(
+                            "Submit",
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    color: application.colorPalette.textColor,
+                                    fontFamily: application.fontFamily,
+                                    fontSize: 18),
+                          ))
+                      : ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.grey,
+                            textStyle: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    color: application.colorPalette.textColor,
+                                    fontFamily: application.fontFamily,
+                                    fontSize: 30),
+                          ),
+                          child: Text(
+                            "Submit",
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle1!
+                                .copyWith(
+                                    color: application.colorPalette.textColor,
+                                    fontFamily: application.fontFamily,
+                                    fontSize: 18),
+                          ),
+                        );
+                },
+              ),
             ],
           ),
         ),
@@ -255,14 +267,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _addUser(String login) {
     setState(() {
-      if (_userList.length < _maxUsers) {
-        _userList.add(login);
+      if (Provider.of<GithubUsersNotifier>(context, listen: false).length() <
+          _maxUsers) {
+        Provider.of<GithubUsersNotifier>(context, listen: false).add(login);
       }
     });
   }
 
   bool _isMaxUsersExceeded() {
-    return _userList.length >= _maxUsers;
+    return Provider.of<GithubUsersNotifier>(context, listen: false).length() >=
+        _maxUsers;
   }
 
 //  void _fetchReportForUser(String login) {

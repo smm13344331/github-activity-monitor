@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:github_activity_monitor/rest_provider.dart';
+import 'package:github_activity_monitor/service_provider.dart';
 import 'package:github_activity_monitor/util/application.dart';
 import 'package:http/http.dart';
 
@@ -32,7 +32,7 @@ class NetworkUtil {
     bool forceAuthenticate = false,
   }) async {
     application.logger.i('======>  POST URL: $url');
-    var headers = RestProvider.generateHeaders(
+    var headers = ServiceProvider.generateHeaders(
       authenticated: authenticated,
       jsonContentType: jsonContentType,
     );
@@ -69,7 +69,7 @@ class NetworkUtil {
     application.logger.i('======>  GET URL: $url');
     Response response;
     String body;
-    var headers = RestProvider.generateHeaders(
+    var headers = ServiceProvider.generateHeaders(
       authenticated: authenticated,
       jsonContentType: jsonContentType,
     );
@@ -79,7 +79,11 @@ class NetworkUtil {
     int statusCode = response.statusCode;
     if (statusCode < 200 || statusCode > 400) {
       application.logger.e("Request returned with error: ${response.body}");
-      return response.body;
+      return Future(
+        () => [
+          {"error": statusCode}
+        ],
+      );
     }
     body = utf8.decode(response.bodyBytes);
 

@@ -11,15 +11,16 @@ class _BarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var map = data.buckets.values.map((element) => element.events.length);
     return BarChart(
       BarChartData(
         barTouchData: barTouchData,
         titlesData: titlesData,
         borderData: borderData,
-        barGroups: _getDailyData(data),
-        gridData: FlGridData(show: false),
+        barGroups: _getHourlyData(data),
+        gridData: FlGridData(show: true, verticalInterval: 1),
         alignment: BarChartAlignment.spaceAround,
-        maxY: 20,
+        maxY: application.getMax(map),
       ),
     );
   }
@@ -47,43 +48,32 @@ class _BarChart extends StatelessWidget {
         ),
       );
 
+  Widget getSideTitles(double value, TitleMeta meta) {
+    const style = TextStyle(
+      color: Color(0xff7589a2),
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+    );
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      space: 4.0,
+      child: Text(value.toString(), style: style),
+    );
+  }
+
   Widget getTitles(double value, TitleMeta meta) {
     const style = TextStyle(
       color: Color(0xff7589a2),
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
-    String text;
-    switch (value.toInt()) {
-      case 1:
-        text = 'Mn';
-        break;
-      case 2:
-        text = 'Te';
-        break;
-      case 3:
-        text = 'Wd';
-        break;
-      case 4:
-        text = 'Tu';
-        break;
-      case 5:
-        text = 'Fr';
-        break;
-      case 6:
-        text = 'St';
-        break;
-      case 7:
-        text = 'Sn';
-        break;
-      default:
-        text = '';
-        break;
-    }
+    var time = value.toInt().toString();
+//    time = time.length < 2 ? "0$time:00" : "$time:00";
+
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 4.0,
-      child: Text(text, style: style),
+      child: Text(time, style: style),
     );
   }
 
@@ -103,7 +93,8 @@ class _BarChart extends StatelessWidget {
           sideTitles: SideTitles(showTitles: false),
         ),
         rightTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+          sideTitles: SideTitles(
+              showTitles: true, interval: 5, getTitlesWidget: getSideTitles),
         ),
       );
 
@@ -130,13 +121,13 @@ class _BarChart extends StatelessWidget {
     );
   }
 
-  List<BarChartGroupData> _getDailyData(BucketList bucketList) {
+  List<BarChartGroupData> _getHourlyData(BucketList bucketList) {
     var buckets = bucketList.buckets;
     List.generate(
-      7,
+      24,
       (index) => buckets.putIfAbsent(
-        index + 1,
-        () => Bucket(index + 1),
+        index,
+        () => Bucket(index),
       ),
     );
 
@@ -148,15 +139,15 @@ class _BarChart extends StatelessWidget {
   }
 }
 
-class BarChartWidget extends StatefulWidget {
-  const BarChartWidget({Key? key, required this.data}) : super(key: key);
+class HourlyBarChartWidget extends StatefulWidget {
+  const HourlyBarChartWidget({Key? key, required this.data}) : super(key: key);
   final BucketList data;
 
   @override
-  State<StatefulWidget> createState() => BarChartWidgetState();
+  State<StatefulWidget> createState() => HourlyBarChartWidgetState();
 }
 
-class BarChartWidgetState extends State<BarChartWidget> {
+class HourlyBarChartWidgetState extends State<HourlyBarChartWidget> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(

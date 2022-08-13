@@ -1,5 +1,5 @@
-import 'package:github_activity_monitor/util/application.dart';
-
 class DependencyConfiguration {
   static ApiType apiType = ApiType.dummy;
 }
+
+enum ApiType { rest, graphQL, dummy }

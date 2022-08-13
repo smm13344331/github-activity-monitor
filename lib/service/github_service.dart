@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:github_activity_monitor/model/bucket.dart';
 import 'package:github_activity_monitor/model/bucket_list.dart';
 import 'package:github_activity_monitor/model/github_event.dart';
@@ -15,7 +17,7 @@ class GithubService {
     _githubEventRepository = GithubEventRepository();
   }
 
-  Future<UserReport> getUserActivity(String login) async {
+  Future<UserReport?> getUserActivity(String login) async {
     var events = _githubEventRepository.getEventsForUser(login);
     UserReport? report;
     return events.then(
@@ -26,9 +28,10 @@ class GithubService {
             updateCache(report!, event, SummaryType.hourOfDay);
             updateCache(report!, event, SummaryType.dayOfWeek);
             updateCache(report!, event, SummaryType.repository);
+            updateCache(report!, event, SummaryType.dayOfMonth);
           },
         );
-        return report!;
+        return report;
       },
     );
   }
@@ -88,5 +91,7 @@ dynamic getBucketIdBySummaryType(GithubEvent event, SummaryType type) {
       return event.createdAt?.weekday;
     case SummaryType.repository:
       return event.repo.id;
+    case SummaryType.dayOfMonth:
+      return event.createdAt?.day;
   }
 }

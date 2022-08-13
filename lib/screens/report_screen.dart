@@ -14,9 +14,6 @@ class ReportScreen extends StatefulWidget {
 }
 
 class _ReportScreenState extends State<ReportScreen> {
-//  final _userReportFormKey = GlobalKey<FormState>();
-//  final _scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
@@ -40,48 +37,41 @@ class _ReportScreenState extends State<ReportScreen> {
 
   Widget _buildReportDesktopView(Size screenSize, BuildContext context) {
     return DefaultTabController(
-      length: 3,
-      child: ChangeNotifierProvider(
-        create: (BuildContext context) => GithubUsersNotifier(),
-        child: Scaffold(
+        length:
+            Provider.of<GithubUsersNotifier>(context, listen: false).length(),
+        child: _createScaffold());
+  }
+
+  List<Widget> _getTabs(GithubUsersNotifier notifier) {
+    List<Widget> result = [];
+    for (String text in notifier.users) {
+      result.add(
+        Tab(
+          text: text,
+        ),
+      );
+    }
+    return result;
+  }
+
+  _createScaffold() {
+    return Consumer<GithubUsersNotifier>(
+      builder: (context, value, child) {
+        return Scaffold(
           appBar: AppBar(
             backgroundColor: application.colorPalette.accentColor,
             foregroundColor: application.colorPalette.iconColor,
             bottom: TabBar(
-              indicatorColor: application.colorPalette.iconColor,
-              tabs: _createTabs(),
-            ),
+                indicatorColor: application.colorPalette.iconColor,
+                labelColor: application.colorPalette.textColor,
+                tabs: _getTabs(value)),
           ),
-          body: const TabBarView(
-            children: [
-              ReportWidget(login: "torvalds"),
-              ReportWidget(login: "torvalds"),
-              ReportWidget(login: "torvalds"),
-            ],
+          body: TabBarView(
+            children:
+                value.users.map((login) => ReportWidget(login: login)).toList(),
           ),
-        ),
-      ),
+        );
+      },
     );
-  }
-
-  List<Widget> _createTabs(){
-    Consumer<GithubUsersNotifier>(builder: (context, value, child) {
-      return 
-    },
-
-    );
-    return [
-      Tab(text: ),
-      Tab(icon: Icon(Icons.directions_transit)),
-      Tab(icon: Icon(Icons.directions_bike)),
-    ];
-  }
-
-  List<Widget> _createViews(){
-    return [
-      ReportWidget(login: "torvalds"),
-      ReportWidget(login: "torvalds"),
-      ReportWidget(login: "torvalds"),
-    ];
   }
 }

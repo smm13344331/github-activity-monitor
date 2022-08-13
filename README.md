@@ -1,16 +1,30 @@
 # github_activity_monitor
 
-A new Flutter project.
+A flutter app for monitoring user push events!
+
+## Prerequisites
+
+Please, Make sure you have [flutter](https://docs.flutter.dev/get-started/install) installed and added to your path variable.
+
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This is the instructions for starting the app in development mode.
 
-A few resources to get you started if this is your first Flutter project:
+1. Open your terminal and `cd` to the root of this project
+2. Get dependencies by running 
+    >`flutter pub get`
+3. Run 
+    >`flutter run --dart-define=GITHUB_TOKEN=<YOUR_TOKEN> --dart-define=API_TYPE=<TYPE> -d chrome` 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    Where `<TYPE>` can be any of `[REST, DUMMY, GRAPH_QL]` (*GraphQL implementation is incomplete*)
+4. It will take a while for the application to spin up and the chrome to open. After the Google Chrome window opened, copy the address with the dynamic port from the address bar. *Ex. http://localhost:45921/* 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    **You will need this in step 6!**
+
+5. Run
+    >`google-chrome --disable-web-security --user-data-dir=<a temp directory>`
+
+    Or
+    >`chromium-browser --disable-web-security --user-data-dir=<a temp directory>`
+6. Open the address you just copied in the newly opened browser and follow the on screen instructions.
