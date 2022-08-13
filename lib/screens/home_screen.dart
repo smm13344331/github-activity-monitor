@@ -87,6 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   onSubmitted: (value) {
                     _addUser(_userLoginController.text);
                     _loginFocusNode.requestFocus();
+                    setState(() {
+                      _userLoginController.selection = TextSelection(
+                          baseOffset: 0,
+                          extentOffset: _userLoginController.text.length);
+                    });
                   },
                   cursorColor: application.colorPalette.accentColor,
                   decoration: InputDecoration(
