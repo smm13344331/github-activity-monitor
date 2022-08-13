@@ -56,8 +56,6 @@ class _ReportWidgetState extends State<ReportWidget>
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
 
-    print(screenSize);
-
     return SizedBox(
       width: screenSize.width,
       height: screenSize.height,

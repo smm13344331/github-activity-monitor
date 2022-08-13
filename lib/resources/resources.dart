@@ -7,7 +7,8 @@ class Resources {
 
   static MaterialPalette get palette => MaterialPalette(
         primaryColor: Colors.white,
-        accentColor: const Color(0xFFff662b),
+//        accentColor: const Color(0xFFff662b),
+        accentColor: Colors.redAccent,
         secondaryColor: const Color(0xFFeff1f2),
         textColor: Colors.black,
         iconColor: Colors.black,
