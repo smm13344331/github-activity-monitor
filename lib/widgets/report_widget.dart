@@ -194,31 +194,4 @@ class _ReportWidgetState extends State<ReportWidget>
       ),
     );
   }
-
-//  List<charts.Series<DataPoint, String>> _getWeeklySeries(String login) {
-//    var buckets = _cache!.buckets[SummaryType.dayOfWeek]!.buckets;
-//    List.generate(
-//      7,
-//      (index) => buckets.putIfAbsent(
-//        index,
-//        () => Bucket(index),
-//      ),
-//    );
-//
-//    final List<DataPoint> data = buckets.values
-//        .map(
-//            (bucket) => DataPoint(bucket.name.toString(), bucket.events.length))
-//        .toList();
-//    data.sort(
-//        (a, b) => int.tryParse(a.label)!.compareTo(int.tryParse(b.label)!));
-//    return [
-//      charts.Series<DataPoint, String>(
-//        id: 'weekly',
-//        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-//        domainFn: (DataPoint dataPoint, _) => dataPoint.label,
-//        measureFn: (DataPoint dataPoint, _) => dataPoint.value,
-//        data: data,
-//      )
-//    ];
-//  }
 }
