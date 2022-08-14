@@ -28,8 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return ResponsiveWidget(
       largeScreen: _buildHomeDesktopView(screenSize, context),
-//      mediumScreen: _buildHomeTabletView(screenSize, context),
-//      smallScreen: _buildHomeMobileView(screenSize, context),
     );
   }
 
@@ -165,7 +163,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Consumer<GithubUsersNotifier>(
                       builder: (context, value, child) => MasonryGridView.count(
                         shrinkWrap: false,
-//                    scrollDirection: Axis.horizontal,
                         itemCount: Provider.of<GithubUsersNotifier>(context,
                                 listen: false)
                             .length(),
@@ -271,31 +268,4 @@ class _HomeScreenState extends State<HomeScreen> {
     return Provider.of<GithubUsersNotifier>(context, listen: false).length() >=
         _maxUsers;
   }
-
-//  void _fetchReportForUser(String login) {
-//    StringBuffer sb = StringBuffer();
-//    RestProvider.githubService.getUserActivity(login).then((reportSummary) {
-//      for (var report in reportSummary) {
-//        sb.writeln(report.user);
-//        for (var bucketList in report.buckets.values) {
-//          sb.writeln("==========================================");
-//          sb.writeln(bucketList.type.name);
-//          sb.writeln("==========================================");
-//          for (var bucket in bucketList.buckets.values) {
-//            sb.writeln("******************************************");
-//            sb.writeln(bucket.name);
-//            sb.writeln("******************************************");
-//            for (var event in bucket.events.values) {
-//              sb.writeln(event.toString());
-//            }
-//          }
-//        }
-//      }
-//      if (mounted) {
-//        setState(() {
-//          _string = sb.toString();
-//        });
-//      }
-//    });
-//  }
 }
